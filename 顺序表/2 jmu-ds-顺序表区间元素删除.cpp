@@ -26,87 +26,85 @@ using namespace std;
 
 typedef int Elemtype;//定义 元素类型
 //构造顺序表 定义存储结构
-typedef struct{
+typedef struct {
 	Elemtype *elem;
 	int length;
-}Sqlist;
+} Sqlist;
 
 Sqlist L;//创建名为L的顺序表
 
-int InitLIst(Sqlist &L){
+int InitLIst(Sqlist &L) {
 	L.elem = new Elemtype[MAXSIZE];
-	if(!L.elem){
+	if (!L.elem) {
 		exit(OVERFLOW);
 	}
-	L.length =0;
+	L.length = 0;
 	return OK;
-} 
+}
 //插入元素
-int ListInsert(Sqlist &L,int i,Elemtype e){
-	if((i<1)||(i>L.length+1)){
+int ListInsert(Sqlist &L, int i, Elemtype e) {
+	if ((i < 1) || (i > L.length + 1)) {
 		return ERROR;
 	}
-	if(L.length==MAXSIZE){
+	if (L.length == MAXSIZE) {
 		return ERROR;
 	}
-	for(int j=L.length-1;j>=i-1;j--)
-	{
-		L.elem[j+1]=L.elem[j];
+	for (int j = L.length - 1; j >= i - 1; j--) {
+		L.elem[j + 1] = L.elem[j];
 	}
-	L.elem[i-1]=e;
+	L.elem[i - 1] = e;
 	++L.length;
 	return OK;
-} 
+}
 //删除元素
-int ListDelete(Sqlist &L,int i){
-	if((i<1)||(i>L.length)){
+int ListDelete(Sqlist &L, int i) {
+	if ((i < 1) || (i > L.length)) {
 		return ERROR;
 	}
-	for(int j=i;j<=L.length;j++){
-		L.elem[j-1]=L.elem[j];
+	for (int j = i; j <= L.length; j++) {
+		L.elem[j - 1] = L.elem[j];
 	}
 	--L.length;
 	return OK;
 }
 //遍历元素
-int TraverseList(Sqlist &L,int i,Elemtype *p){
-	if((i<1)||(i>L.length+1)){
-		return ERROR; 
+int TraverseList(Sqlist &L, int i, Elemtype *p) {
+	if ((i < 1) || (i > L.length + 1)) {
+		return ERROR;
 	}
-	*p=L.elem[i-1];
+	*p = L.elem[i - 1];
 	return OK;
 }
 
-int main()
-{
+int main() {
 	InitLIst(L);
-	int n,x,y,t;
-	
-	cin>>n;
-	
-	for(int k=1;k<=n;k++){
-		cin>>t;
-		ListInsert(L,k,t);
+	int n, x, y, t;
+
+	cin >> n;
+
+	for (int k = 1; k <= n; k++) {
+		cin >> t;
+		ListInsert(L, k, t);
 	}
-	cin>>x>>y;
-	
+	cin >> x >> y;
+
 //	遍历查找删除开始
-	for(int k=1;k<=n;k++){
-		TraverseList(L,k,&t);
-		 if(t>=x&&t<=y){
-		 	ListDelete(L,k);
-		 	k--;  //!!!!!!!!!!!!!易错点!!!!!!!!!!!!!!!!
-		 	n--;
-		 }
-	} 
-	
-//	遍历输出开始
-	for(int k=1;k<=n;k++){
-		TraverseList(L,k,&t);
-		if(k<n){
-			cout<<t<<" ";
-		}else{
-			cout<<t;
+	for (int k = 1; k <= n; k++) {
+		TraverseList(L, k, &t);
+		if (t >= x && t <= y) {
+			ListDelete(L, k);
+			k--;
+			n--;
 		}
-	} 
+	}
+
+//	遍历输出开始
+	for (int k = 1; k <= n; k++) {
+		TraverseList(L, k, &t);
+		if (k < n) {
+			cout << t << " ";
+		} else {
+			cout << t;
+		}
+	}
 }
